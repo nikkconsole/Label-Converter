@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Label tag shape -->
+  <path d="M4 6 Q4 3 7 3 L20 3 L28 11 L28 25 Q28 29 24 29 L7 29 Q4 29 4 26 Z"
+        fill="url(#g)"/>
+  <!-- Hole on the label -->
+  <circle cx="9" cy="9" r="2" fill="white" opacity="0.9"/>
+  <!-- "LC" text -->
+  <text x="13" y="22" font-family="'Poppins', 'Arial', sans-serif"
+        font-size="11" font-weight="700" fill="white" text-anchor="middle">LC</text>
+</svg>

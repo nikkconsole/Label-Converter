@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  backend:
+    build: ./backend
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - FLASK_ENV=${FLASK_ENV:-production}
+      - UPLOAD_DIR=${UPLOAD_DIR:-/app/uploads}
+      - OUTPUT_DIR=${OUTPUT_DIR:-/app/outputs}
+    volumes:
+      - ./cache/uploads:/app/uploads
+      - ./cache/outputs:/app/outputs
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: ${BACKEND_URL:-http://backend:5000}
+    ports:
+      - "2030:80"
+    depends_on:
+      backend:
+        condition: service_healthy

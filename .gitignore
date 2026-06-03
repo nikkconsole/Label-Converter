@@ -1,0 +1,40 @@
+# ========================
+# Environment Variables
+# ========================
+.env
+.env.*
+!.env.example
+
+# ========================
+# Node / Frontend
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# ========================
+# Python / Backend
+# ========================
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+backend/venv/
+backend/env/
+**/.pytest_cache/
+**/.hypothesis/
+
+# ========================
+# Runtime Data (cache)
+# ========================
+cache/**
+!cache/
+!cache/uploads/
+!cache/outputs/
+!cache/**/.gitkeep
+
+# ========================
+# OS Specific
+# ========================
+.DS_Store
+Thumbs.db
