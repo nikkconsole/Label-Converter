@@ -80,5 +80,48 @@ Browser
                 └─► Flask / gunicorn
                         └─► Redis (shared state)
 ```
+Startup order is health-gated:
+- Redis must be **healthy** before the backend starts
+- Backend must be **healthy** before the frontend starts
 
-Startup order is health-gated: Redis must be healthy before the backend starts, and the backend must be healthy before the frontend starts.
+---
+
+## Horizontal Scaling
+
+You can run multiple backend replicas with a single flag:
+```bash
+docker compose up --scale backend=3
+```
+
+**Why this works:** `RedisAppState` stores ALL session state in the shared Redis service, so each backend replica is stateless with respect to application data. nginx round-robins requests across replicas using Docker's internal DNS for the `backend` service name — no load balancer configuration required.
+
+---
+
+## Inspecting Volume Contents
+
+Uploaded files:
+```bash
+docker run --rm -v uploads_data:/data alpine ls /data
+```
+
+Converted outputs:
+```bash
+docker run --rm -v outputs_data:/data alpine ls /data
+```
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React, Vite, Nginx |
+| Backend | Python, Flask, Gunicorn |
+| State | Redis |
+| Container | Docker, Docker Compose |
+
+---
+
+## License
+
+MIT
